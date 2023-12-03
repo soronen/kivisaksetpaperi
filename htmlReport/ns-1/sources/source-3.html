@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Peli</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">kivipaperisakset</a>
+</div>
+
+<h1>Coverage Summary for Class: Peli (kivipaperisakset)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Peli</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.4%
+  </span>
+  <span class="absValue">
+    (34/36)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Peli$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.6%
+  </span>
+  <span class="absValue">
+    (35/37)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package kivipaperisakset;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author Ira Dook
+&nbsp; */
+&nbsp;public class Peli {
+&nbsp;
+&nbsp;    private Pelaaja p1;
+&nbsp;    private Pelaaja p2;
+&nbsp;
+<b class="fc">&nbsp;    private int pelatutPelit = 0;</b>
+&nbsp;    private int turnauksenPituus;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Konstruktori
+&nbsp;     * @param p1 Pelaaja 1
+&nbsp;     * @param p2 Pelaaja 2
+&nbsp;     * @param turnauksenPituus Turnauksen pituus, eli monta matsia pelataan
+&nbsp;     */
+<b class="fc">&nbsp;    public Peli(Pelaaja p1, Pelaaja p2, int turnauksenPituus) {</b>
+<b class="fc">&nbsp;        this.p1 = p1;</b>
+<b class="fc">&nbsp;        this.p2 = p2;</b>
+<b class="fc">&nbsp;        this.turnauksenPituus = turnauksenPituus;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  Pelaa yhden pelin ja palauttaa tuloksen
+&nbsp;     * @return pelin tulos
+&nbsp;     */
+&nbsp;    public String pelaaPeli() {
+<b class="fc">&nbsp;        if (turnausLoppunut()) {</b>
+<b class="fc">&nbsp;            return getTilanne();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        pelatutPelit++;</b>
+<b class="fc">&nbsp;        Valinta p1Valinta = p1.pelaajanValinta();</b>
+<b class="fc">&nbsp;        Valinta p2Valinta = p2.pelaajanValinta();</b>
+&nbsp;
+<b class="fc">&nbsp;        return switch (p1Valinta) {</b>
+<b class="fc">&nbsp;            case KIVI -&gt; switch (p2Valinta) {</b>
+&nbsp;                case SAKSET -&gt; {
+<b class="fc">&nbsp;                    p1.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA1_VOITTI.getTeksti();</b>
+&nbsp;                }
+&nbsp;                case PAPERI -&gt; {
+<b class="fc">&nbsp;                    p2.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA2_VOITTI.getTeksti();</b>
+&nbsp;                }
+<b class="fc">&nbsp;                default -&gt; Tulos.TASAPELI.getTeksti();</b>
+&nbsp;            };
+<b class="fc">&nbsp;            case PAPERI -&gt; switch (p2Valinta) {</b>
+&nbsp;                case KIVI -&gt; {
+<b class="fc">&nbsp;                    p1.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA1_VOITTI.getTeksti();</b>
+&nbsp;                }
+&nbsp;                case SAKSET -&gt; {
+<b class="fc">&nbsp;                    p2.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA2_VOITTI.getTeksti();</b>
+&nbsp;                }
+<b class="nc">&nbsp;                default -&gt; Tulos.TASAPELI.getTeksti();</b>
+&nbsp;            };
+<b class="fc">&nbsp;            case SAKSET -&gt; switch (p2Valinta) {</b>
+&nbsp;                case PAPERI -&gt; {
+<b class="fc">&nbsp;                    p1.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA1_VOITTI.getTeksti();</b>
+&nbsp;                }
+&nbsp;                case KIVI -&gt; {
+<b class="fc">&nbsp;                    p2.lisaaVoitto();</b>
+<b class="fc">&nbsp;                    yield Tulos.PELAAJA2_VOITTI.getTeksti();</b>
+&nbsp;                }
+<b class="fc">&nbsp;                default -&gt; Tulos.TASAPELI.getTeksti();</b>
+&nbsp;            };
+&nbsp;        };
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Palauttaa turnauksen tilanteen
+&nbsp;     * @return turnauksen tilanne
+&nbsp;     */
+&nbsp;    public String getTilanne() {
+<b class="fc">&nbsp;        if (turnausLoppunut()) {</b>
+<b class="fc">&nbsp;            return &quot;Turnaus on päättynyt! Lopputulokset: &quot; + p1.getVoitot() + &quot; - &quot; + p2.getVoitot();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;Pelaaja 1: &quot; + p1.getVoitot() + &quot; - Pelaaja 2: &quot; + p2.getVoitot();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean turnausLoppunut() {
+<b class="fc">&nbsp;        return pelatutPelit &gt;= turnauksenPituus;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Palauttaa pelattujen pelien lukumäärän
+&nbsp;     * @return pelattujen pelien lukumäärä
+&nbsp;     */
+&nbsp;    public int getPelatutPelit() {
+<b class="fc">&nbsp;        return pelatutPelit;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Palauttaa pelaajan 1 voittojen lukumäärän
+&nbsp;     * @return pelaajan 1 voittojen lukumäärä
+&nbsp;     */
+&nbsp;    public int getP1Voitot() {
+<b class="fc">&nbsp;        return p1.getVoitot();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Palauttaa pelaajan 2 voittojen lukumäärän
+&nbsp;     * @return  pelaajan 2 voittojen lukumäärä
+&nbsp;     */
+&nbsp;    public int getP2Voitot() {
+<b class="fc">&nbsp;        return p2.getVoitot();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-03 14:53</div>
+</div>
+</body>
+</html>
